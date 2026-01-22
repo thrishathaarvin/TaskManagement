@@ -62,19 +62,4 @@ public class TaskSearchService {
     }
 
 
-    private Comparator<Task> buildComparator(TaskSearchCriteria c) {
-        if (c.sortField == null) return (a, b) -> 0;
-
-        Comparator<Task> comp = switch (c.sortField) {
-            case PRIORITY -> Comparator.comparing(Task::getPriority);
-            case DUE_DATE -> Comparator.comparing(
-                    (Task t) -> t.getDueDate().orElse(LocalDateTime.MAX)
-            );
-            case CREATED_AT -> Comparator.comparing(Task::getCreatedAt);
-            case STATUS -> Comparator.comparing(Task::getStatus);
-        };
-
-        return c.ascending ? comp : comp.reversed();
-    }
-
 }

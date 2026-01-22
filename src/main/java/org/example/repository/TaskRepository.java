@@ -18,8 +18,4 @@ public class TaskRepository {
     public List<Task> findAll(){
         return new ArrayList<>(InMemoryDatabase.tasks.values());
     }
-
-    public List<Task> findHistory(UUID taskId) {
-        return List.of();
-    }
 }

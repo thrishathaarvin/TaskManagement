@@ -10,9 +10,8 @@ import org.example.domain.user.User;
 import org.example.repository.ActivityRepository;
 import org.example.repository.TaskRepository;
 import org.example.repository.UserRepository;
-import org.example.service.TaskService;
 import org.example.report.ReportService;
-import org.example.service.search.TaskSearchCriteria;
+
 import org.example.service.search.TaskSearchService;
 
 import java.time.LocalDate;
@@ -23,7 +22,6 @@ public class CLI {
 
     private final Scanner scanner = new Scanner(System.in);
     private final UserRepository userRepo = new UserRepository();
-    private final TaskService taskService = new TaskService();
     private final TaskRepository taskRepo = new TaskRepository();
     private final TaskSearchService searchService = new TaskSearchService();
     private final ReportService reportService = new ReportService();

@@ -16,12 +16,5 @@ import java.time.LocalDate;
         public LocalDate createdFrom;
         public LocalDate createdTo;
 
-        public SortField sortField;
-        public boolean ascending=true;
-
-        public enum SortField{
-            PRIORITY, DUE_DATE, CREATED_AT, STATUS
-        }
-
     }
 
