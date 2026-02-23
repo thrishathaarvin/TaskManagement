@@ -49,14 +49,13 @@ jobs:
                org.junit.platform.console.ConsoleLauncher --select-class org.example.integration.UserIntegrationTest
 
       # Step 7: Build Docker image
-      
       - name: Build Docker image
         run: |
           docker build -t task-management .
 
-      # Step 8 (optional): Save JAR as artifact
+      # Step 8: Upload JAR Artifact
       - name: Upload JAR Artifact
-      uses: actions/upload-artifact@v4
-  with:
-    name: task-management-jar
-    path: task-management.jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-management-jar
+          path: task-management.jar
