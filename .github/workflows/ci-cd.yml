@@ -49,6 +49,7 @@ jobs:
                org.junit.platform.console.ConsoleLauncher --select-class org.example.integration.UserIntegrationTest
 
       # Step 7: Build Docker image
+      
       - name: Build Docker image
         run: |
           docker build -t task-management .
