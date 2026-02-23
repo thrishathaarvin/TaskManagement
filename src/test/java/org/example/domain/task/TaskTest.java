@@ -3,7 +3,7 @@ package org.example.domain.task;
 import org.example.domain.user.Role;
 import org.example.domain.user.User;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
