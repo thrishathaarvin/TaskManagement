@@ -29,24 +29,19 @@ jobs:
           mkdir -p out
           javac --release 17 -d out $(find src -name "*.java")
 
-      # Step 4: Build JAR
+      # Step 4: Build runnable JAR
       - name: Build runnable JAR
         run: |
           jar cfe task-management.jar org.example.Main -C out .
 
-      # Step 5: Run unit tests (TaskTest)
-      - name: Run Unit Tests
+      # Step 5 & 6: Run unit + integration tests
+      - name: Run Unit & Integration Tests
         run: |
-          curl -LO https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar
-          curl -LO https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar
-          java -cp "out:junit-jupiter-api-5.10.0.jar:junit-jupiter-engine-5.10.0.jar" \
-               org.junit.platform.console.ConsoleLauncher --select-class org.example.domain.task.TaskTest
-
-      # Step 6: Run integration tests (UserIntegrationTest)
-      - name: Run Integration Tests
-        run: |
-          java -cp "out:junit-jupiter-api-5.10.0.jar:junit-jupiter-engine-5.10.0.jar" \
-               org.junit.platform.console.ConsoleLauncher --select-class org.example.integration.UserIntegrationTest
+          curl -LO https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
+          # Run Task unit tests
+          java -jar junit-platform-console-standalone-1.10.0.jar --class-path out --select-class org.example.domain.task.TaskTest
+          # Run User integration tests
+          java -jar junit-platform-console-standalone-1.10.0.jar --class-path out --select-class org.example.integration.UserIntegrationTest
 
       # Step 7: Build Docker image
       - name: Build Docker image
