@@ -82,6 +82,14 @@ public final class Task {
 
     public static Builder builder() { return new Builder(); }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public static class Builder {
         private UUID id = UUID.randomUUID();
         private int version = 1;

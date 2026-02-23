@@ -19,4 +19,8 @@ public final class Comment {
     public String toString(){
         return "[" + timestamp + "]" + author.getName() + ": " + text;
     }
+
+    public String getText() {
+        return text;
+    }
 }
