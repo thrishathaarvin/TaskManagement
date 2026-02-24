@@ -22,32 +22,45 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Step 3: Compile main + test classes
+      # Step 3: Download JUnit Platform (needed for compile + test)
+      - name: Download JUnit Platform
+        run: |
+          curl -LO https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
+
+      # Step 4: Compile main and test classes
       - name: Compile Java project and tests
         run: |
           mkdir -p out
-          # Compile main classes
-          javac --release 17 -d out $(find src/main/java -name "*.java")
-          # Compile test classes (use out as classpath for main classes)
-          javac --release 17 -cp out -d out $(find src/test/java -name "*.java")
 
-      # Step 4: Build runnable JAR
+          # Compile main classes
+          javac --release 17 \
+            -d out \
+            $(find src/main/java -name "*.java")
+
+          # Compile test classes (include JUnit in classpath)
+          javac --release 17 \
+            -cp "out:junit-platform-console-standalone-1.10.0.jar" \
+            -d out \
+            $(find src/test/java -name "*.java")
+
+      # Step 5: Build runnable JAR
       - name: Build runnable JAR
         run: |
           jar cfe task-management.jar org.example.Main -C out .
 
-      # Step 5: Run all tests (unit + integration)
+      # Step 6: Run Unit & Integration Tests
       - name: Run Unit & Integration Tests
         run: |
-          curl -LO https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
-          java -jar junit-platform-console-standalone-1.10.0.jar --class-path out --scan-class-path
+          java -jar junit-platform-console-standalone-1.10.0.jar \
+            --class-path out \
+            --scan-class-path
 
-      # Step 6: Build Docker image
+      # Step 7: Build Docker image
       - name: Build Docker image
         run: |
           docker build -t task-management .
 
-      # Step 7: Upload JAR artifact
+      # Step 8: Upload JAR artifact
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
