@@ -68,7 +68,7 @@ public class TaskTest {
         Task assignedTask = task.withAssignee(assignee);
         assertEquals(assignee, assignedTask.getAssignedTo().get());
 
-        Comment comment = new Comment(creator, "nice work");
+        Comment comment = new Comment(creator, "Nice work");
         Task commentedTask = assignedTask.withComment(comment);
         assertEquals(1, commentedTask.getComments().size());
         assertEquals("Nice work", commentedTask.getComments().get(0).getText());
